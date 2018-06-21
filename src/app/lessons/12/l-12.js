@@ -45,17 +45,29 @@
     console.h2('Homework Task 12.01');
     // Points: 2
     // Please write an example of reading the 'src/app/data/config.json' file by absolute path, synchronously (!)
-
+    var fileConfig = fs.readFileSync('./src/app/data/config.json', "utf8");
+    console.log('Downloaded data:\n', fileConfig);
 
     console.h2('Homework Task 12.02');
     // Points: 2
     // Please write an example of reading the 'src/app/data/config.json' file by relative path, asynchronously
     // Tip: you may need 'path' module for it, see above
+    
+    fs.readFile(jsonPath, "utf8", function(error,data){
+        if (error){
+            throw error;
+        }
+        else{
+            console.log('Data loaded for task 2:\n', data);
+        }
 
+     });
 
     console.h2('Homework Task 12.03');
     // Points: 4
     // Implement Config module (src/app/config.index.js) as a singleton to be used by other modules
+const singleone = require ('../../config/index');
 
+ let singleTwo = singleone.confSingle();
 
 }());

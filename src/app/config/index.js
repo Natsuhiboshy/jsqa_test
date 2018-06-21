@@ -1,6 +1,8 @@
 'use strict';
 
-(function () {
+const L12SyngleTone = (function () {
+    let firstinit;
+    function OneInit (){
     console.h2('Config Module');
 
     require('../util/console');
@@ -17,15 +19,6 @@
         }
         _config = data;
     }
-
-    function _loadConfig() {
-        fs.readFile(jsonPath, 'utf8', _parseData);
-    }
-
-    function _loadConfigSync() {
-        _config = fs.readFileSync(jsonPath, 'utf8');
-    }
-
     function _readAbsolutePath() {
         fs.readFile('/etc/hosts', 'utf8', (err, data) => {
             if (err) {
@@ -34,18 +27,38 @@
             console.log('Sensitive data loaded:', data);
         });
     }
-
-    // Export Module API
-    exports.getConfig = () => {
-        return _config;
+return {
+    _loadConfig: function () {
+        fs.readFile(jsonPath, 'utf8', _parseData);
+    },
+    _loadConfigSync: function () {
+        _config = fs.readFileSync(jsonPath, 'utf8');
+    },
+    getConfig: _config
+}
+}   
+return {
+    configSyngletone: function  (){
+        if (!firstinit){
+            firstinit = OneInit();
+        }
+        return firstinit;
+    }  
+} 
+})();
+     // Export Module API
+   /*  exports.getConfig = () => {
+        return firstinit._config;
     }
-
+    
     exports.loadConfig = () => {
-        _loadConfig();
+        firstinit._loadConfig();
     }
-
+    
     exports.loadConfigSync = () => {
-        _loadConfigSync();
-        return _config;
+        firstinit._loadConfigSync();
+        return firstimit._config;
+    }*/
+    exports.confSingle = () => {
+        L12SyngleTone.configSyngletone();
     }
-}());

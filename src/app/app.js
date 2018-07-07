@@ -3,6 +3,9 @@
 var getter = require ('./course/index');
 console.log('App file');
 console.log('Start date: ', getter.getStartDate());
+getComputedStyle.setStartDate();
+getter.setStartDate('August 27, 2018');
+console.log('Start date: ', getter.getStartDate());
 =======
 // src/app/index.js
 require('./util/console');

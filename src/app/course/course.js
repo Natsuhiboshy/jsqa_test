@@ -60,5 +60,6 @@
     // Public Module API
     exports.getStartDate = () => startDate;
     exports.createLesson = LessonFactory.factory;
+    exports.setStartDate = (value) => startDate = value;
 
 })();

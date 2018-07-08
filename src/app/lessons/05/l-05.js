@@ -494,7 +494,306 @@ console.log(Function.prototype.isPrototypeOf(Object)); // true: Object.construct
 
 
 
+<<<<<<< HEAD
 console.h1('Lesson 05 - End');
+=======
+// Об'єкти JSON відрізняються від звичайних JavaScript-об'єктів більш строгими
+// вимогами до рядків - вони повинні бути саме в подвійних лапках.
+
+// Як перевірити JSON на правильність
+// Можна завжди перевірити валідність JSON на сервісі JSONLint. Наприклад,
+// ось зразки валідного JSON:
+
+// JSON як об'єкт:
+// {
+//      "a": "a"
+// }
+
+// JSON як масив:
+[
+    2,
+    3,
+    5,
+    7
+]
+
+[
+    "a",
+    "b",
+    "c",
+    "d"
+]
+
+// Вкладені об'єкти та масиви:
+[
+    "a",
+    "b",
+    [
+        1,
+        2,
+        3
+    ],
+    {
+        "key 1": "value 1",
+        "key 2": "value 2"
+    }
+]
+
+// Приклад невалідного JSON:
+
+// Невалідний, тому що не починається з символа об'єкту {} або масиву []
+// 1
+
+// JSON як об'єкт - але невалідний, тому що ключ 1 не взятий у лапки:
+// {
+//     1: "one"
+// }
+
+
+//
+// Методи JSON.stringify і JSON.parse
+//
+
+// Метод JSON.stringify (value, props, space) перетворює значення value в JSON-рядок.
+// Це називається серіалізацією об'єкту і використовується для того, щоб передавати об'єкти,
+// зберігаючи їх структуру.
+
+// Підтримується у всіх браузерах, включаючи IE8+. Для старіших IE є бібліотека JSON-js,
+// що додає аналогічну функціональність.
+
+// У другому параметрі props методу JSON.stringify можна вказати масив властивостей,
+// що підлягають серіалізації.
+
+// Третій параметр - space, використвується для форматування рядка.
+
+// Якщо space є числом, то рівні вкладеності в JSON показуються вказаною кількістю прогалин,
+// а якщо рядком - то вставляється цей рядок.
+
+var user = {
+	name: 'Taras',
+	surname:'S',
+	job: 'Poet'
+};
+
+console.log( JSON.stringify(user) );
+// Дасть:
+// "{"name":"Taras","surname":"S","job":"Poet"}"
+
+console.log( JSON.stringify(user, ['name']) );
+
+// Дасть:
+// "{"name":"Taras"}"
+
+var userString = JSON.stringify(user, ['name'], 4);
+
+console.log( userString ); // наглядно серіалізовані вибрані властивості об'єкту:
+
+// Дасть:
+// "{
+//     "name": "Taras"
+// }"
+
+//
+// Метод JSON.parse (str, replacer) читає об'єкт-значення з рядка str.
+//
+
+// Це називається "десеріалізація" і використовується для того, щоб відновлювати
+// значення і структуру (!) об'єкту з рядка.
+
+var objAgain = JSON.parse(userString);
+
+console.logObj = function ( objectToLog ) {
+	for ( var propName in objectToLog ) {
+		console.log('prop: ' + propName + ' = ' + objectToLog[propName] );
+	}
+};
+
+console.logObj(objAgain);
+
+//
+// DOM та BOM
+//
+
+//
+// Об'єктна модель документу (DOM) - Document Object Model
+// Доступна через document. Дає доступ до вмісту сторінки.
+//
+
+// Об'єктна модель браузера (BOM)
+// BOM - це об'єкти для роботи з чим завгодно, крім документа. Доступ до фреймів,
+// запити до сервера, функції alert / confirm / prompt - все це BOM.
+
+// SOM - Shell Object Model
+// Core: {
+// 	Print: 'function (argument) {
+// 		[native code]
+// 	}',
+// 	Exit: null
+// }
+
+// navigator: платформа і браузер
+
+// Об'єкт navigator містить загальну інформацію про браузері і операційну систему.
+
+// navigator.userAgent - містить інформацію про браузер.
+// navigator.platform - містить інформацію про платформу, дозволяє розрізняти
+// Windows / Linux / Mac і т.п.
+
+//
+// screen
+//
+
+//
+// Об'єкт screen містить загальну інформацію про екран, включаючи його дозвіл,
+// кольоровість і т.п. Воно може бути корисно для визначення, що код виконується
+// на мобільному пристрої з маленьким дозволом. Поточне дозвіл екрана відвідувача
+// по горизонталі / вертикалі знаходиться в screen.width / screen.height.
+//
+
+//
+// location
+//
+
+var locObj = {
+  "hash": "",
+  "search": "?espv=2&ie=UTF-8",
+  "pathname": "/_/chrome/newtab",
+  "port": "",
+  "hostname": "www.google.com.ua",
+  "host": "www.google.com.ua",
+  "protocol": "https:",
+  "origin": "https://www.google.com.ua",
+  "href": "https://www.google.com.ua/_/chrome/newtab?espv=2&ie=UTF-8",
+  "ancestorOrigins": {}
+};
+
+console.logObj(locObj);
+
+// Об'єкт location надає інформацію про поточний URL і дозволяє JavaScript
+// перенаправити відвідувача на інший URL. Значним цієї властивості є об'єкт типу
+// Location.
+
+//
+// frames
+//
+
+// Колекція, що містить фрейми і іфрейми. Можна звертатися до них як за номером,
+// так і по імені. У frames містяться window-об'єкти дочірніх фреймів.
+
+//
+// history
+//
+
+// Об'єкт history дозволяє міняти URL без перезавантаження сторінки
+// (в межах того ж домена) за допомогою History API, а також перенаправляти
+// відвідувача назад-вперед по історії.
+
+// Об'єкт history не надає можливості читати історію відвідувань.
+// Можна відправити відвідувача назад викликом history.back() або вперед
+// викликом history.forward(), але самі адреси браузер не дає з міркувань безпеки.
+
+//
+// Функції
+//
+
+function name(a, b){
+	/* code */
+	var abc = 'abc';
+	name.counter++;
+	console.log('function name counter = ' +  name.counter);
+	return abc;
+}
+
+// var name = new Function('a, b', '/* code */');
+
+name.counter = 0;
+
+console.log(name.counter);
+
+name();
+
+console.log(name());
+console.log(name());
+console.log(name());
+console.log(name());
+
+// Анонімні функції
+
+
+
+// Відірване від оголошення
+f = function( argument) { } // функція-вираз
+
+
+// інструкція функції
+// var a;
+// function separator () {
+// 	Core.Print('------------------');
+// }
+
+// функція-вираз
+var separator = function() {
+ 	Core.Print('------------------');
+}
+
+var arr = [ function(){
+	Core.Print('0000000000000000000000');
+}];
+
+separator();
+
+arr[0]();
+
+//
+// Замикання
+//
+
+function counter () {
+	var count = 0;
+	var internalFunction = function() {
+		console.log( count++ );
+	}
+	return internalFunction;
+}
+
+// Замикання - у цей момент:
+var iterator = counter();
+
+iterator();
+iterator();
+iterator();
+iterator();
+iterator();
+iterator();
+
+// Callback - функція
+
+function loadData( success, fail ) {
+	// var result = true;
+	// AJAX.load('http://gl.org/userData', success, fail);
+
+	// AJAX load:
+	var result = true;
+	if ( result === true ) {
+		success('LOADED DATA');
+	} else {
+		fail('LOAD ERROR');
+	}
+}
+
+///
+
+loadData( function ( response ) {
+	console.log('load successful: ' + response );
+}, function( error) {
+	console.log('load failed: ' + error );
+});
+
+
+
+
+console.h1('Lesson 9 - End');
+>>>>>>> 647f0880e526e5dd2a55b1ea5bf0aaa3c7fc0c4c
 
 //
 // Домашня робота:

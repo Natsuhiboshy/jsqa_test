@@ -81,7 +81,7 @@
     // Task: review Slide # 23 from here...
     // https://docs.google.com/presentation/d/1qryoG2jeH5XMkkpx-imWl1EtpUnDmRh8dVnf7lfhJNo/edit?usp=sharing
     // ...and complete this phrase, replacing three dots [...] with needed word:
-    console.log('Parentheses around any part of the regular expression pattern causes that part of the matched substring to be ...');
+    console.log('Parentheses around any part of the regular expression pattern causes that part of the matched substring to be remembered.');
 
 
     console.h3('Homework Task 15.02. Points: 1');
@@ -93,7 +93,7 @@
     // Using RegExp.prototype.test method, check whether the given regexp can be found in the given string.
     // Output the result to the console.
     // TODO: Do your work here:
-
+    console.log('The result of string testing for regexp reg: ', reg.test(phrase));
 
     console.h3('Homework Task 15.03. Points: 2');
     // Given is the same phrase as in previous task.
@@ -102,7 +102,17 @@
     // Using RegExp.prototype.test method, check how many times the given regexp can be found in the given string.
     // Output the result to the console.
     // TODO: Do your work here:
+    function mathCount (regg, phrase){
+        let reggMathCounter = 0;
+        for (let i=0; i<phrase.length; i++){
+            if (regg.test(phrase.substr(i, 2))){
+                reggMathCounter ++;
+            }
+        }
+        return reggMathCounter;
+    }
 
+    console.log('The string matchas '+mathCount(regg, phrase)+' times.');
 
     console.h3('Homework Task 15.04. Points: 3');
     // Let's practice RegExp.prototype.exec() method
@@ -112,5 +122,15 @@
     // Using the RegExp.prototype.exec() method, list the indexes of all inclusions of this regexp in the string.
     // Output the result to the console.
     // TODO: Do your work here:
+    function execVerification(regg, phrase){
+        let execCheck;
+        do{
+            execCheck = regg.exec(phrase);
+            if (execCheck) {
+                console.log('Found match with regg \"', execCheck[0], '\" at index' ,regg.lastIndex);
+            }
+        }while(execCheck !== null);
+    }
+    execVerification(regg, phrase);
 
 }());

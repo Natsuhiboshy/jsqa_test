@@ -64,6 +64,7 @@
     // Log the result to the contsole.
     // TIP: you don't need any special RegExp characters to complete this task.
     // TODO: write code here
+    console.log(homeworkOneTaskOne.match(/JavaScript/g));
 
     console.h3('Homework Task 14.02');
     // Points: 2
@@ -73,6 +74,8 @@
     // TIP: you do need a special RegExp character and 'g' flag to complete this task.
     // TODO: write code here
 
+    console.log(homeworkOneTaskOne.match(/con*d*/g));
+
     console.h3('Homework Task 14.03');
     // Points: 3
     // Given is the same string, as in Task 1.
@@ -80,6 +83,7 @@
     // Log the result to the contsole.
     // TIP: you may need few special characters, 'g' and 'i' flags.
     // TODO: write code here
+    console.log(homeworkOneTaskOne.match(/Can|con*d*/g));
 
     console.h3('Homework Task 14.04');
     // Points: 2
@@ -91,5 +95,6 @@
     // and log the found index to the console.
     // TIP: you don't need neither special characters nor flags to complete this task
     // TODO: write code here
-
+    let indexxOfString = homeworkTwoTaskOneResult.indexOf(homeworkTwoTaskOneResult.match('I\'ve reviewed the l-02.js file and I understand it'));
+    console.log('Index of substring \"I\'ve reviewed the l-02.js file and I understand it\" is: ', indexxOfString);
 }());

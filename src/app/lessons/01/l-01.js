@@ -399,7 +399,5 @@ console.log("Answer to question 4: The used complex data type is Object. The Arr
 // Task 01.05 - 3 points
 // Q: Please write a function which calculates the difference between two numbers
 // A: Please see function Differencer.
- function Differencer (a, b){
-    return a-b;
-}
+ function Differencer (a, b){return a-b;}
 // Lesson 01 Homework - End

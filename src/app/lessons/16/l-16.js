@@ -21,7 +21,9 @@
         '01': {
             '01': 'answer: ye+s',
             '02': 'use strict;',
-            '03': 'boolean,number,string,null,undefined,symbol'
+            '03': '',
+            '04': 'object,* *array,* *function',
+            '05': 'function Differencer *\(a, b\)\{return a-b;\}',
         },
         '02': [ ],
         '03': [ ],
@@ -31,52 +33,77 @@
         '07': [ ]
     };
 
-    function loadLessonAsAText(lessonId, callback) {
+    function loadLessonAsAText(lessonId, callback, lessonArray) {
         let lessonFilePath = path.join(__dirname, '..', lessonId, 'l-' + lessonId + '.js');
 
         function augmentedCallback(err, data) {
-            callback(err, data, lessonId);
+            callback(err, data, lessonArray, lessonId);
         };
 
         fs.readFile(lessonFilePath, 'utf8', augmentedCallback);    
     }
 
-    function parseLoadedLessonText(err, lessonText, lessonId) {
+    function parseLoadedLessonText(err, lessonText, lessonArray, lessonId) {
         if (err) {
             console.log('Error loading file:', err);
         }
-        // console.log('Loaded Lesson by ID:', lessonId);
-        console.log(`Lesson ${lessonId} Answers: ${lessonSolutions[lessonId]}`);
-        console.log('Loaded Lesson Text:', lessonText);
+        if (!lessonArray||typeof(lessonArray)!=='object'){
+            console.log('Incorrect input');
+            return;
+        }
 
-        function extractTaskById(taskId, nextTaskId) {
+        console.log('Loaded Lesson Text:', lessonText);
+        // console.log('Loaded Lesson by ID:', lessonId);
+        console.log(`Lesson ${lessonId} Answers: ${lessonArray[lessonId]}`);
+        let taskIdArray = [];
+        for (var id in lessonArray[lessonId]){
+            taskIdArray.push(id);
+            console.log('id: ', id);
+        }
+        console.log('taskIdArray', taskIdArray);
+        let counter = 1;
+        for (var task in lessonArray[lessonId]){
+            if (counter<taskIdArray.length){
+                console.log('-------------- Task text: ', extractTaskById(task, lessonId, taskIdArray[counter]));
+                console.log('-------------- Answer matches: ', checkTaskById(task, extractTaskById(task, lessonId,  taskIdArray[counter]), lessonId));
+                counter++;
+            }
+            else {
+                console.log('-------------- Task text: ', extractTaskById(task, lessonId));
+                console.log('-------------- Answer matches: ', checkTaskById(task, extractTaskById(task, lessonId), lessonId));
+            }
+        }
+        function extractTaskById(taskId, lessonId, nextTaskId) {
             // let taskStartRegExp = /Task 01\.01/g;
             let taskStartRegExp = new RegExp('Task ' + lessonId + '\.' + taskId, 'g');
-            // let taskEndRegExp = /Task 01\.02/g;
-            let taskEndRegExp = new RegExp('Task ' + lessonId + '\.' + nextTaskId, 'g');
-                
-            taskStartRegExp.test(lessonText);
-            taskEndRegExp.test(lessonText);
-    
-            console.log('Start index:', taskStartRegExp.lastIndex);
-            console.log('End index:', taskEndRegExp.lastIndex);
-    
-            return lessonText.substring(taskStartRegExp.lastIndex, taskEndRegExp.lastIndex);
-        }
+            let taskEndRegExp;
+if(!nextTaskId){
+// let taskEndRegExp = /Task 01\.02/g;
+taskEndRegExp = new RegExp('Lesson '+ lessonId + ' Homework - End', 'g');
+}
+else {
+// let taskEndRegExp = /Task 01\.02/g;
+taskEndRegExp = new RegExp('Task ' + lessonId + '\.' + nextTaskId, 'g');
+} 
+   
+taskStartRegExp.test(lessonText);
+taskEndRegExp.test(lessonText);
 
-        function checkTaskById(taskId, taskText) {
-            let answerRegExp = new RegExp(lessonSolutions[lessonId][taskId], 'i');
-            return answerRegExp.test(taskText)
-        }
-        
-        console.log('-------------- Task text: ', extractTaskById('01', '02'));
-        console.log('-------------- Answer matches: ', checkTaskById('01', extractTaskById('01', '02')));
-        
+console.log('Start index:', taskStartRegExp.lastIndex);
+console.log('End index:', taskEndRegExp.lastIndex);
+
+return lessonText.substring(taskStartRegExp.lastIndex, taskEndRegExp.lastIndex);
+}
+
+function checkTaskById(taskId, taskText, lessonId) {
+let answerRegExp = new RegExp(lessonSolutions[lessonId][taskId], 'i');
+return answerRegExp.test(taskText)
+}      
     }
 
     function loadAndParseAllLessonsAsAText() {
         for (let i = 0; i < lessonIds.length; i++) {
-            loadLessonAsAText(lessonIds[i], parseLoadedLessonText);
+            loadLessonAsAText(lessonIds.toString(), parseLoadedLessonText, lessonSolutions);
         }
     }
 

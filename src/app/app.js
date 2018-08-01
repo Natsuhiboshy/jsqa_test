@@ -13,6 +13,7 @@ console.h1(course.getStartDate());
 
 const c = config.getInstance();
 
+// TODO Use it for loading lesson solutions
 c.loadConfig('app.config.json', (err, data) => {
     let _loadedData = JSON.parse(data);
     course.setStartDate(_loadedData.startDate);

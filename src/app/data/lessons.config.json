@@ -1,9 +1,15 @@
 {
     "lessons": [{
         "name": "Lesson 1",
-        "tasks": null
+        "lessonId": "01",
+        "tasks": {
+            "01": "answer: ye+s",
+            "02": "use strict;",
+            "03": "boolean,number,string,null,undefined,symbol"
+        }
     }, {
         "name": "Lesson 2",
-        "tasks": [1, 2, 3]
+        "lessonId": "02",
+        "tasks": []
     }]
 }

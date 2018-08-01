@@ -44,15 +44,24 @@
 
     console.h3('Homework Task 17.01. Points: 1');
     // Review Lesson 17 Slides and complete this sentence:
-    console.log('child_process.spawn returns a ...');
+    console.log('child_process.spawn returns a returns an object with stdout and stderr streams.');
 
     console.h3('Homework Task 17.02. Points: 1');
     // Review Lesson 17 Slides and complete this sentence:
-    console.log('child_process.exec returns a ...');
+    console.log('child_process.exec returns a returns the whole buffer output from the child process. ');
 
     console.h3('Homework Task 17.03. Points: 3');
     // Write a function which executes command of your choice in the shell using child_process.exec method.
     // Output the result to console
     // TODO: Write code here
+    const {exec} = require('child_process');
+    exec('node src/app/app.js ', function(error,stdout,stderr){
+        if (error){throw error;}
+        else {
+            console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            console.log('\tResult of exec exeution: ', stdout);
+            console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        }
+    });
 
 })();

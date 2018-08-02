@@ -54,21 +54,28 @@
 
     console.h3('Homework Task 18.01. Points: 1');
     // Review Lesson 18 Slides and complete the sentence:
-    console.log('To create asynchronous function, use ... keyword before the function declaration');
+    console.log('To create asynchronous function, use async keyword before the function declaration');
 
     console.h3('Homework Task 18.02. Points: 2');
     // Review this file.
     // Write and call a new function, 'delay' which accepts a number of seconds.
     // To make the delay in given number of seconds, it converts seconds to milliseconds and calls the 'wait' function:
     // TODO: Write code here
-
+    function delay (secondsNumber, wait){
+        let delayInms = secondsNumber*1000;
+        wait(delayInms).then(()=> saySomething('Passed '+secondsNumber+' seconds.')).catch(error=>{console.log('Error catched: ', error);});
+    }
+    delay(5, wait);
     console.h3('Homework Task 18.03. Points: 3');
     // Complete a function below.
     // It pretends to read a file from the disk (not reading it, actually). 
     // But, if filename is 'error.txt', it always returns a rejected Promise, resolving in error.
     function readFile(fileName) {
         return new Promise((resolve, reject) => {
-        // TODO: Complete code here
+          setTimeout(() => {
+            reject('Rejected: file not found!');
+            throw 'File not found.';            
+          }, 2000);
         })
     }
 
